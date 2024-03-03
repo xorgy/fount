@@ -97,14 +97,16 @@ fn main() {
 
 fn dump_family(family: &fontique::FamilyInfo) {
     println!("[{}]", family.name());
-    let default_font = family.default_font().unwrap();
-    for font in family.fonts() {
-        if font.source().id() == default_font.source().id() && font.index() == default_font.index()
-        {
-            print!("*");
-        } else {
-            print!(" ")
+    if let Some(default_font) = family.default_font() {
+        for font in family.fonts() {
+            if font.source().id() == default_font.source().id()
+                && font.index() == default_font.index()
+            {
+                print!("*");
+            } else {
+                print!(" ")
+            }
+            println!(" {:?}", font);
         }
-        println!(" {:?}", font);
     }
 }
